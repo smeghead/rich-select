@@ -33,8 +33,8 @@ Event.observe(window, 'load', function(){
     if (select.options.length <= 31) {
       return;
     }
-    var text = document.createElement('input');
-    text.className = 'rich-select-text';
+    var text = $(document.createElement('input'));
+    text.setAttribute('class', 'rich-select-text');
     var copy_styles = $A([
       'margin-top', 'margin-right', 'margin-bottom', 'margin-left',
       'padding-top', 'padding-right', 'padding-bottom', 'padding-left'
@@ -43,27 +43,27 @@ Event.observe(window, 'load', function(){
     copy_styles.each(function(elm) {
       text.style[elm] = computedStyle($select, elm);
     });                     
-    var box = document.createElement('div');
-    box.className = 'rich-select';
+    var box = $(document.createElement('div'));
+    box.setAttribute('class', 'rich-select');
     var setupSelectionFunc = function(input_value) {
       var alt = '';
       return function(sel){
-        if (input_value && !sel.innerText.match(new RegExp(input_value, 'i'))) {
+        if (input_value && !sel.innerHTML.match(new RegExp(input_value, 'i'))) {
           return;
         }
-        var o = document.createElement('div');
-        o.className = 'rich-select-option';
+        var o = $(document.createElement('div'));
+        o.setAttribute('class', 'rich-select-option');
         if (alt.length > 0) {
-          o.className += ' ' + alt;
+          o.setAttribute('class', o.getAttribute('class') + ' ' + alt);
           alt = '';
         } else {
           alt = 'rich-select-option-alt';
         }
-        o.innerText = sel.innerText;
+        o.innerHTML = sel.innerHTML;
         var current_value = sel.getAttribute('value');
         o.setAttribute('data-value', current_value);
         if ($F($select) == current_value) {
-          o.className += ' rich-select-option-current';
+          o.setAttribute('class', o.getAttribute('class') + ' rich-select-option-current');
         }
         o.observe('click', function(){
           $select.value = o.getAttribute('data-value');
@@ -77,8 +77,8 @@ Event.observe(window, 'load', function(){
 
     box.appendChild(text);
 
-    var link = document.createElement('span');
-    link.className = 'rich-select-trigger';
+    var link = $(document.createElement('span'));
+    link.setAttribute('class', 'rich-select-trigger');
     link.innerHTML = '&nbsp;&nbsp;&nbsp;';
     link.setAttribute('title', '選択肢を検索');
     link.observe('click', function(ev){
@@ -113,7 +113,7 @@ Event.observe(window, 'load', function(){
       $select.parentNode.appendChild(box);
       text.focus();
       Event.stop(ev);
-      document.body.observe('click', function(ev){
+      $(document.body).observe('click', function(ev){
         if (box.parentNode == null) return;
         Element.remove(box);
         $select.style.display = $select.getAttribute('data-orgdisplay');
@@ -127,8 +127,8 @@ Event.observe(window, 'load', function(){
     });
   });
   //style
-  var s = document.createElement('style');
-  s.innerText = '' +
+  var s = $(document.createElement('style'));
+  var style_text = document.createTextNode('<!--' +
     '.rich-select-text {border: 1px solid gray; }' +
     '.rich-select {height:400px; overflow: scroll; z-index: 1000;}' +
     '.rich-select-option {background-color: #eee;cursor: pointer; font-size: 90%; padding: 0px 5px;}' +
@@ -136,7 +136,8 @@ Event.observe(window, 'load', function(){
     '.rich-select-option:hover {background-color: #ccf;cursor: pointer; font-size: 90%;}' +
     '.rich-select-option-alt {background-color: #ddd;}' +
     '.rich-select-trigger {cursor: pointer; vertical-align: middle; margin: 5px; background-color: #ccf; border: 1px solid #ccd; border-radius: 5px;}' +
-    '';
+    '-->');
+  s.appendChild(style_text);
   document.body.appendChild(s);
 });
 //  vim: set ts=2 sw=2 sts=2 expandtab fenc=utf-8:
