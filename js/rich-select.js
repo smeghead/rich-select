@@ -80,7 +80,7 @@ Event.observe(window, 'load', function(){
     var link = document.createElement('span');
     link.className = 'rich-select-trigger';
     link.innerHTML = '&nbsp;&nbsp;&nbsp;';
-    link.setAttribute('title', 'searchable select interface.');
+    link.setAttribute('title', '選択肢を検索');
     link.observe('click', function(ev){
       text.observe('keyup', function(ev){
         var input_value = ev.target.value;
@@ -114,7 +114,6 @@ Event.observe(window, 'load', function(){
       text.focus();
       Event.stop(ev);
       document.body.observe('click', function(ev){
-        Event.stop(ev);
         if (box.parentNode == null) return;
         Element.remove(box);
         $select.style.display = $select.getAttribute('data-orgdisplay');
@@ -133,9 +132,10 @@ Event.observe(window, 'load', function(){
     '.rich-select-text {border: 1px solid gray; }' +
     '.rich-select {height:400px; overflow: scroll; z-index: 1000;}' +
     '.rich-select-option {background-color: #eee;cursor: pointer; font-size: 90%; padding: 0px 5px;}' +
+    '.rich-select-option-current {font-weight: bold;}' +
     '.rich-select-option:hover {background-color: #ccf;cursor: pointer; font-size: 90%;}' +
     '.rich-select-option-alt {background-color: #ddd;}' +
-    '.rich-select-trigger {cursor: pointer; vertical-align: middle; margin: 5px; background-color: #eef; border: 1px solid #dde; border-radius: 8px;}' +
+    '.rich-select-trigger {cursor: pointer; vertical-align: middle; margin: 5px; background-color: #ccf; border: 1px solid #ccd; border-radius: 5px;}' +
     '';
   document.body.appendChild(s);
 });
